@@ -1,0 +1,248 @@
+/* ---------- Tokens ---------- */
+:root {
+  --page:  #F2F4F5;   /* cool light grey page */
+  --paper: #FFFFFF;   /* the viewing stage */
+  --ink:   #000000;   /* Sharpie black */
+  --muted: #69737A;
+  --rule:  #D3D9DC;
+  --sky:   #7CCFEE;   /* borrowed from the week 5 poster: selected row only */
+
+  --pad-x: 5%;
+  --header-h: 15vh;
+  --footer-h: 5vh;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+  background: var(--page);
+  color: var(--ink);
+  height: 100vh;
+  display: grid;
+  grid-template-rows: var(--header-h) 1fr var(--footer-h);
+  overflow: hidden;
+}
+
+/* ---------- Header: 15% of window height, left aligned ---------- */
+header {
+  height: var(--header-h);
+  padding: 0 var(--pad-x);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+h1 {
+  font-weight: 800;
+  font-size: min(3.2vw, 5.2vh);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Two columns: index 25vw, viewer takes the rest ---------- */
+main {
+  min-height: 0;
+  padding: 0 var(--pad-x);
+  display: grid;
+  grid-template-columns: 25vw 1fr;
+  column-gap: 3vw;
+}
+
+/* ---------- Left column: week tabs + thumbnail grids ---------- */
+#index {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 0.75rem 2rem 0;
+  border-right: 1px solid var(--rule);
+}
+
+.tabs {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 1.1rem;
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.9rem;
+  background: var(--page);
+  border-bottom: 1px solid var(--rule);
+}
+
+.tab {
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--muted);
+  padding: 0.15rem 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+.tab:hover { color: var(--ink); }
+
+.tab[aria-selected="true"] {
+  color: var(--ink);
+  font-weight: 600;
+  border-bottom-color: var(--ink);
+}
+
+.tab:focus-visible,
+.thumb:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.folder + .folder { margin-top: 1.1rem; }
+
+.folder h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.folder h3 .count {
+  font-weight: 300;
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+  gap: 4px;
+}
+
+.thumb {
+  aspect-ratio: 1;
+  padding: 6px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  cursor: pointer;
+}
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.thumb:hover { border-color: var(--ink); }
+
+.thumb[aria-current="true"] {
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 3px var(--sky);
+}
+
+/* ---------- Right column: notes, stage, caption ---------- */
+.viewer {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.notes {
+  padding-bottom: 1.1rem;
+}
+
+.notes h2 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.notes .text {
+  font-size: clamp(0.8rem, 0.85vw, 0.95rem);
+  line-height: 1.55;
+}
+
+/* two text columns on wide screens so the notes stay short */
+@media (min-width: 1100px) {
+  .notes .text {
+    column-count: 2;
+    column-gap: 2.5rem;
+  }
+}
+
+.notes p { break-inside: avoid-column; }
+.notes p + p { margin-top: 0.8em; }
+
+#stage {
+  position: relative;
+  min-height: 0;
+  background: var(--paper);
+  overflow: hidden;
+}
+
+#stage canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0 0.25rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.caption a { color: inherit; }
+
+#caption-count { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ---------- Footer: 5% of window height ---------- */
+footer {
+  height: var(--footer-h);
+  padding: 0 var(--pad-x);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: clamp(0.68rem, 0.8vw, 0.8rem);
+  font-weight: 300;
+  color: var(--muted);
+}
+
+/* ---------- Small screens: stack ---------- */
+@media (max-width: 800px) {
+  body {
+    height: auto;
+    min-height: 100vh;
+    overflow: auto;
+    grid-template-rows: var(--header-h) auto var(--footer-h);
+  }
+
+  h1 { font-size: min(6vw, 5vh); }
+
+  main {
+    grid-template-columns: 1fr;
+    row-gap: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  #index {
+    max-height: 45vh;
+    border-right: 0;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1rem;
+  }
+
+  .viewer { grid-template-rows: auto 60vh auto; }
+
+  footer { min-height: 2.5rem; }
+  .hint { display: none; }
+}

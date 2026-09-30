@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Becoming a Microscope</title>
+
+  <!-- Typeface: Work Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- p5.js 2.x (svgkit needs 2.x), svgkit, the file list, then the sketch -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@2/lib/p5.min.js"></script>
+  <script src="p5.svgkit.js"></script>
+  <script src="data/manifest.js"></script>
+  <script src="data/notes.js"></script>
+  <script src="sketch.js"></script>
+</head>
+<body>
+
+  <header>
+    <h1>BECOMING A MICROSCOPE</h1>
+  </header>
+
+  <main>
+    <!-- Left column: weeks as tabs, each week shows its folders as thumbnail grids -->
+    <nav id="index" aria-label="Archive files"></nav>
+
+    <!-- Right column: notes on top, then the viewer -->
+    <section class="viewer">
+      <article class="notes" id="notes" aria-live="polite"></article>
+
+      <div id="stage"></div>
+
+      <div class="caption">
+        <span id="caption-path"></span>
+        <span id="caption-count"></span>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Sisi Kim, MFA Communications Design, Pratt Institute, 2026</span>
+    <span class="hint">Use ↑ ↓ to move through the archive</span>
+  </footer>
+
+</body>
+</html>
